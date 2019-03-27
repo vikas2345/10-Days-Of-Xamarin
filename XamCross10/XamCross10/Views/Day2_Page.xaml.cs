@@ -10,6 +10,7 @@ namespace XamCross10.Views
     public partial class Day2_Page : ContentPage
     {
         Experience experience;
+        SQLiteAsyncConnection sQLiteAsyncConnection = new SQLiteAsyncConnection("asdf");
 
         public Day2_Page()
         {
@@ -58,8 +59,7 @@ namespace XamCross10.Views
 
         private void BtnCancel_Clicked(object sender, EventArgs e)
         {
-            //Navigation.PopAsync();
-            Navigation.PopToRootAsync();
+
         }
 
         private void EntTitle_TextChanged(object sender, TextChangedEventArgs e)

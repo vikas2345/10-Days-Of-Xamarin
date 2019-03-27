@@ -13,13 +13,9 @@ namespace XamCross10
         {
             InitializeComponent();
             DatabasePath = databasePath;
-            MainPage = new NavigationPage(new ExperiencePage());
-        }
+            MainPage = new NavigationPage(new Day2_Page());
+            
 
-        public App()
-        {
-            InitializeComponent();
-            MainPage = new NavigationPage(new ExperiencePage());
         }
 
         protected override void OnStart()

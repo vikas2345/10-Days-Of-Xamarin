@@ -34,11 +34,5 @@
     <string>XamCross10</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
-    <key>NSCalendarsUsageDescription</key>
-     <string>Needs Calendar Permission</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>Needs Bluetooth Permission</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Needs Location Permission</string> 
 </dict>
 </plist>

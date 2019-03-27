@@ -8,8 +8,6 @@ using Android.Widget;
 using Android.OS;
 using Environment = System.Environment;
 using System.IO;
-using Plugin.Permissions;
-using Plugin.CurrentActivity;
 
 namespace XamCross10.Droid
 {
@@ -27,16 +25,9 @@ namespace XamCross10.Droid
 
             string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string dbPath = Path.Combine(folderPath,fileName);
-
-            CrossCurrentActivity.Current.Init(this, savedInstanceState);
-
             LoadApplication(new App(dbPath));
-        }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        {
-            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
         }
     }
 }
