@@ -8,10 +8,14 @@ namespace XamCross10
 {
     public partial class App : Application
     {
-        public App()
+        public static string DatabasePath;
+        public App(string databasePath)
         {
             InitializeComponent();
+            DatabasePath = databasePath;
             MainPage = new NavigationPage(new Day2_Page());
+            
+
         }
 
         protected override void OnStart()
