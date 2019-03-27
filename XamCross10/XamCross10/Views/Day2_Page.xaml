@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+              x:Class="XamCross10.Views.Day2_Page"
+              iOS:Page.UseSafeArea="true">
+    <ContentPage.Content>
+        <StackLayout Margin="16,20">
+            <Entry x:Name="entTitle" Style="{StaticResource mainEntryStyle}" Placeholder="Title Of the Experience"
+                   TextChanged="EntTitle_TextChanged"
+                   />
+            
+            <Editor x:Name="edtrExperience" Style="{StaticResource mainEditorStyle}" Placeholder="Write Your Experience..."
+                    TextChanged="EdtrExperience_TextChanged" VerticalOptions="FillAndExpand" 
+                    TextColor="Black"/>
+
+            <Button x:Name="btnSave" Style="{StaticResource mainButtonStyle}"
+                    IsEnabled="False"
+                    Text="Save" Clicked="BtnSave_Clicked"/>
+            
+            <Button x:Name="btnCancel" Style="{StaticResource cancelButtonStyle}" Text="Cancel" 
+                    Clicked="BtnCancel_Clicked"/>
+        </StackLayout>       
+    </ContentPage.Content>
+</ContentPage>

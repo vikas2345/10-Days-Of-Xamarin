@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamCross10.Views;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XamCross10
@@ -10,8 +11,7 @@ namespace XamCross10
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new Day2_Page());
         }
 
         protected override void OnStart()

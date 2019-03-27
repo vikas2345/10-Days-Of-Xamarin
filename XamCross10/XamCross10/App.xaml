@@ -3,6 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XamCross10.App">
     <Application.Resources>
+        
+        <!--Colors-->
+        <Color x:Key="mainColor">#326273</Color>
+        <Color x:Key="whiteColor">#EEEEEE</Color>
+        <Color x:Key="blackColor">#1C1C1C</Color>
+        <Color x:Key="accentColor">#4392F1</Color>
+        <Color x:Key="destructiveColor">#EF798A</Color>
+        <Color x:Key="secondaryColor">#BFBFBF</Color>
+        
+        <!--Styles-->
 
+        <Style x:Key="mainButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource accentColor}"/>
+            <Setter Property="TextColor" Value= "{StaticResource whiteColor}"/>
+        </Style>
+
+        <Style x:Key="deleteButtonStyle" TargetType="Button" BasedOn="{StaticResource mainButtonStyle}">
+            <Setter Property="BackgroundColor" Value="{StaticResource destructiveColor}"/>
+        </Style>
+
+        <Style x:Key="cancelButtonStyle" TargetType="Button" BasedOn="{StaticResource mainButtonStyle}">
+            <Setter Property="BackgroundColor" Value="{StaticResource secondaryColor}"></Setter>            
+        </Style>
+
+        <Style x:Key="mainEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="{StaticResource blackColor}"/>
+            <Setter Property="PlaceholderColor" Value="{StaticResource secondaryColor}"/>
+        </Style>
+
+        <Style x:Key="mainEditorStyle" TargetType="Editor" >
+            <Setter Property="TextColor" Value="{StaticResource blackColor}"/>
+            <Setter Property="PlaceholderColor" Value="{StaticResource secondaryColor}"/>
+        </Style>
+        
+        
     </Application.Resources>
 </Application>
