@@ -13,13 +13,13 @@ namespace XamCross10
         {
             InitializeComponent();
             DatabasePath = databasePath;
-            MainPage = new NavigationPage(new ExperiencePage());
+            MainPage = new NavigationPage(new BluetoothPage());
         }
 
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new ExperiencePage());
+            MainPage = new NavigationPage(new BluetoothPage());
         }
 
         protected override void OnStart()
