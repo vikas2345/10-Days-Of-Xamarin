@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
               x:Class="XamCross10.Views.Day2_Page"
+              Title="Add Experience"
               iOS:Page.UseSafeArea="true">
     <ContentPage.Content>
         <StackLayout Margin="16,20">
+            <!--Entry Title-->
             <Entry x:Name="entTitle" Style="{StaticResource mainEntryStyle}" Text="{Binding Title,Mode=TwoWay}"
                    Placeholder="Title Of the Experience"
                    TextChanged="EntTitle_TextChanged"/>
@@ -30,13 +32,13 @@
                 <Label x:Name="selectedVenueCategory" Style="{StaticResource subtitleLabelStyle}" Text="{Binding SelectedVenue.MainCategory}"/>
                 <Label x:Name="selectedVenueCoordinates" Style="{StaticResource detailLabelStyle}" Text="{Binding SelectedVenue.location.Coordinates}"/>
             </StackLayout>
-            
-            <Editor x:Name="edtrExperience" Style="{StaticResource mainEditorStyle}" Placeholder="Write Your Experience..."
+
+            <!--Editor to Explain Experience-->
+            <Editor x:Name="edtrExperience" Style="{StaticResource mainEditorStyle}"  Placeholder="Write Your Experience..."
                     TextChanged="EdtrExperience_TextChanged" Text="{Binding Content}"
                     VerticalOptions="FillAndExpand" 
                     TextColor="Black"/>
           
-
             <Button x:Name="btnSave" Style="{StaticResource mainButtonStyle}"
                     IsEnabled="False"
                     Text="Save" Clicked="BtnSave_Clicked"/>

@@ -5,6 +5,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Plugin.Geolocator.Abstractions;
 using SQLite;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamCross10.Common;
@@ -94,18 +95,26 @@ namespace XamCross10.Views
         {
             if (!string.IsNullOrWhiteSpace(searchEntry.Text))
             {
-                /*string url = $"<https://api.foursquare.com/v2/venues/search?ll={position.Latitude},{position.Longitude >}&radius=500&query={searchEntry.Text}&limit=3&client_id={Helpers.Constants.FOURSQR_CLIENT_ID}&client_secret={Helpers.Constants.FOURSQR_CLIENT_SECRET}&v={DateTime.Now.ToString("yyyyMMdd")}";
+                /*string url = $"<https://api.foursquare.com/v2/venues/search?ll={position.Latitude},{position.Longitude >}
+                 * &radius=500&query={searchEntry.Text}&limit=3&client_id={Helpers.Constants.FOURSQR_CLIENT_ID}&
+                 * client_secret={Helpers.Constants.FOURSQR_CLIENT_SECRET}&v={DateTime.Now.ToString("yyyyMMdd")}";
             */
-                using (HttpClient client = new HttpClient())
+                var current = Connectivity.NetworkAccess;
+                if (current == NetworkAccess.Internet)
                 {
-                    string json = await client.GetStringAsync("http://demo1418609.mockable.io/check");
+                    using (HttpClient client = new HttpClient())
+                    {
+                        string json = await client.GetStringAsync("http://demo1418609.mockable.io/check");
 
-
-
-                    SearchAPI_FourSquareResponseModel results = JsonConvert.DeserializeObject<SearchAPI_FourSquareResponseModel>(json);
-                    venueListView.IsVisible = true;
-                    venueListView.ItemsSource = results.response.venues;
-                };
+                        SearchAPI_FourSquareResponseModel results = JsonConvert.DeserializeObject<SearchAPI_FourSquareResponseModel>(json);
+                        venueListView.IsVisible = true;
+                        venueListView.ItemsSource = results.response.venues;
+                    };
+                }
+                else
+                {
+                    await DisplayAlert("Alert", "No Internet Connection", "Oke");
+                }
             }
 
             else

@@ -41,6 +41,11 @@ namespace XamCross10.Views
             }
         }
 
+        void btnStatuc_Clicked()
+        {
+
+        }
+
         private async void btnScan_Clicked(object sender, EventArgs e)
         {
             try

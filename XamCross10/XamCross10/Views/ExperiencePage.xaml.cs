@@ -1,4 +1,21 @@
-﻿using System;
+﻿
+/* READ ME
+ * Class -
+ * 
+ * ------------Methods-------
+ * ToolbarItem_NewClicked
+    Geolocator_PositionChanged
+    GetLocationPermission
+    GetLocation
+    ReadExperience
+ * 
+ * sadfas*/
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
