@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace XamCross10.Models
 {
@@ -29,6 +30,13 @@ namespace XamCross10.Models
         public string state { get; set; }
         public string country { get; set; }
         public IList<string> formattedAddress { get; set; }
+
+        private string  coordinates;
+        public string  Coordinates
+        {
+            get { return $"{lat:0.000},{lng:0.000}" ; }
+        }
+
     }
 
     public class Icon
@@ -61,6 +69,10 @@ namespace XamCross10.Models
         public string referralId { get; set; }
         public bool hasPerk { get; set; }
         public VenuePage venuePage { get; set; }
+
+        private string mainCategory;
+        public string MainCategory{get
+            { return categories.FirstOrDefault()?.name;}}
     }
 
     public class Response

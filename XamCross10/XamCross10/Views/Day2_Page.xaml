@@ -9,8 +9,7 @@
         <StackLayout Margin="16,20">
             <!--Entry Title-->
             <Entry x:Name="entTitle" Style="{StaticResource mainEntryStyle}" Text="{Binding Title,Mode=TwoWay}"
-                   Placeholder="Title Of the Experience"
-                   TextChanged="EntTitle_TextChanged"/>
+                   Placeholder="Title Of the Experience"/>
 
             <!--search Venue Entry-->
             <Entry x:Name="searchEntry" Style="{StaticResource mainEntryStyle}" Text="{Binding Query,Mode=TwoWay}" 
@@ -18,7 +17,8 @@
 
             <!--search Venue Hidden ListView Populate-->
             <ListView x:Name="venueListView"  HeightRequest="20" Margin="-16,0" SelectedItem="{Binding SelectedVenue,Mode=TwoWay}"
-                      ItemSelected="VenueListView_ItemSelected">
+                      IsVisible="False"
+                      ItemSelected="{Binding ShowVenues}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding name}" Detail="{Binding location.distance, StringFormat='{}{0} meters away'}"/>
@@ -27,7 +27,7 @@
             </ListView>
 
             <!--search Venue Hidden StackLayout-->
-            <StackLayout x:Name="selectedVenueStackLayout" IsVisible="False">
+            <StackLayout x:Name="selectedVenueStackLayout" IsVisible="{Binding ShowSelectedVenue}">
                 <Label x:Name="selectedVenueName" Style="{StaticResource titleLabelStyle}" Text="{Binding SelectedVenue.name}"/>
                 <Label x:Name="selectedVenueCategory" Style="{StaticResource subtitleLabelStyle}" Text="{Binding SelectedVenue.MainCategory}"/>
                 <Label x:Name="selectedVenueCoordinates" Style="{StaticResource detailLabelStyle}" Text="{Binding SelectedVenue.location.Coordinates}"/>
@@ -35,12 +35,11 @@
 
             <!--Editor to Explain Experience-->
             <Editor x:Name="edtrExperience" Style="{StaticResource mainEditorStyle}"  Placeholder="Write Your Experience..."
-                    TextChanged="EdtrExperience_TextChanged" Text="{Binding Content}"
-                    VerticalOptions="FillAndExpand" 
+                    Text="{Binding Content, Mode=TwoWay}" VerticalOptions="FillAndExpand" 
                     TextColor="Black"/>
           
             <Button x:Name="btnSave" Style="{StaticResource mainButtonStyle}"
-                    IsEnabled="False"
+                    IsEnabled="{Binding CanSave}"
                     Text="Save" Clicked="BtnSave_Clicked"/>
             
             <Button x:Name="btnCancel" Style="{StaticResource cancelButtonStyle}" Text="Cancel" 

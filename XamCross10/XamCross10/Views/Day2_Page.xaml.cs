@@ -10,7 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamCross10.Common;
 using XamCross10.Models;
-using static XamCross10.Models.SearchAPI_FourSquareResponseModel;
+using XamCross10.ViewModels;
 
 namespace XamCross10.Views
 {
@@ -18,24 +18,27 @@ namespace XamCross10.Views
     public partial class Day2_Page : ContentPage
     {
         Experience experience;
+        Day2_PageViewModel day2_PageViewModel;
+
 
         public Day2_Page()
         {
             InitializeComponent();
+            BindingContext = day2_PageViewModel;
         }
 
         private void BtnSave_Clicked(object sender, EventArgs e)
         {
-            experience = new Experience() {
-                Title = entTitle.Text,
-                Content = edtrExperience.Text,
+            experience = new Experience()
+            {
+                Title = day2_PageViewModel.Title,
+                Content = day2_PageViewModel.Content,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                VenueName = selectedVenueName.Text,
-                VenueCategory = selectedVenueCategory.Text,
-                VenueLat = float.Parse(selectedVenueCoordinates.Text.Split(',')[0]),
-                VenueLng = float.Parse(selectedVenueCoordinates.Text.Split(',')[1])
-
+                VenueName = day2_PageViewModel.SelectedVenue.name,
+                VenueCategory = day2_PageViewModel.SelectedVenue.MainCategory,
+                VenueLat = float.Parse(day2_PageViewModel.SelectedVenue.location.Coordinates.Split(',') [0]),
+                VenueLng = float.Parse(day2_PageViewModel.SelectedVenue.location.Coordinates.Split(',')[1])
             };
 
             int insertedItems = 0;
@@ -47,16 +50,12 @@ namespace XamCross10.Views
                 insertedItems++;
             };
 
-            if(insertedItems > 0)
+            if (insertedItems > 0)
             {
                 //clear the text fields
-                entTitle.Text = string.Empty;
-                edtrExperience.Text = string.Empty;
-                selectedVenueStackLayout.IsVisible = false;
-                selectedVenueName.Text = string.Empty;
-                selectedVenueCategory.Text = string.Empty;
-                selectedVenueCoordinates.Text = string.Empty;
-
+                day2_PageViewModel.Title = string.Empty;
+                day2_PageViewModel.Content = string.Empty;
+                day2_PageViewModel.SelectedVenue = null;
                 Navigation.PopAsync();
             }
             else
@@ -69,7 +68,7 @@ namespace XamCross10.Views
         {
             btnSave.IsEnabled = false;
 
-            if (!string.IsNullOrWhiteSpace(entTitle.Text) && !string.IsNullOrWhiteSpace(edtrExperience.Text))
+            if (!string.IsNullOrWhiteSpace(day2_PageViewModel.Title) && !string.IsNullOrWhiteSpace(day2_PageViewModel.Content))
             {
                 btnSave.IsEnabled = true;
             }
@@ -81,21 +80,12 @@ namespace XamCross10.Views
             Navigation.PopToRootAsync();
         }
 
-        private void EntTitle_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            checkBtnShouldbeEnabled();
-        }
-
-        private void EdtrExperience_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            checkBtnShouldbeEnabled();
-        }
-
         private async void SearchEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(searchEntry.Text))
+            if (!string.IsNullOrWhiteSpace(day2_PageViewModel.Query))
             {
-                /*string url = $"<https://api.foursquare.com/v2/venues/search?ll={position.Latitude},{position.Longitude >}
+                /* URL created by Author :
+                 * string url = $"<https://api.foursquare.com/v2/venues/search?ll={position.Latitude},{position.Longitude >}
                  * &radius=500&query={searchEntry.Text}&limit=3&client_id={Helpers.Constants.FOURSQR_CLIENT_ID}&
                  * client_secret={Helpers.Constants.FOURSQR_CLIENT_SECRET}&v={DateTime.Now.ToString("yyyyMMdd")}";
             */
@@ -122,20 +112,20 @@ namespace XamCross10.Views
                 venueListView.IsVisible = false;
             }
         }
-
-
+        
         //https://api.foursquare.com/v2/venues/search?ll=12.971599,77.594566&" +
         //    "client_id=BV52JG3OG0HCL1E2GNLU3XM55BASQXNX0CY1NBREG1BTDJ2O&" +
         //    "client_secret=0HOZHFM3FOFGGE2SMKJ0N2LCVWEYK05TUH2IVL5YANXZYDGY&" +
         //    "v=20190326
-
-
+        
 
         string GetParamaters(Position position, DateTime dateTime)
         {
-            List<KeyValuePair<string, string>> queryParameter = new List<KeyValuePair<string, string>>();
-            queryParameter.Add(new KeyValuePair<string, string>("Latitude", position.Latitude.ToString()));
-            queryParameter.Add(new KeyValuePair<string, string>("Longitude", position.Longitude.ToString()));
+            List<KeyValuePair<string, string>> queryParameter = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Latitude", position.Latitude.ToString()),
+                new KeyValuePair<string, string>("Longitude", position.Longitude.ToString())
+            };
 
             return PrepareURL(queryParameter);
         }
@@ -149,7 +139,7 @@ namespace XamCross10.Views
                 switch (item.Key)
                 {
                     case "Latitude":
-                        PreparedURL = PreparedURL + LocationText + item.Value + "," ;
+                        PreparedURL = PreparedURL + LocationText + item.Value + ",";
                         break;
                     case "Longitude":
                         PreparedURL = PreparedURL + item.Value;
@@ -160,24 +150,19 @@ namespace XamCross10.Views
                 }
             }
 
-            var URL = PreparedURL + Constants.client_id + Constants.FourSquare_clientID+Constants.amPerSand
-                + Constants.client_secret + Constants.FourSquare_clientSecret+Constants.amPerSand + DateTime.Now.ToString("yyyyMMdd");
+            var URL = PreparedURL + Constants.client_id + Constants.FourSquare_clientID + Constants.amPerSand
+                + Constants.client_secret + Constants.FourSquare_clientSecret + Constants.amPerSand + DateTime.Now.ToString("yyyyMMdd");
 
             return URL;
-       }
+        }
 
         private void VenueListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if(venueListView.SelectedItem != null)
+            if (venueListView.SelectedItem != null)
             {
                 selectedVenueStackLayout.IsVisible = true;
-                searchEntry.Text = string.Empty;
+                day2_PageViewModel.Query = string.Empty;
                 venueListView.IsVisible = false;
-
-                Venue venue = venueListView.SelectedItem as Venue;
-                selectedVenueName.Text = venue.name;
-                selectedVenueCategory.Text = venue.categories.FirstOrDefault()?.name;
-                selectedVenueCoordinates.Text = $"{ venue.location.lat: 0.0000},{venue.location.lng:0.0000}";
             }
             else
             {
